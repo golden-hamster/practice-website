@@ -1,0 +1,22 @@
+<!-- member.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Member</title>
+</head>
+<body>
+<h1>Show Member</h1>
+<div th:if="${member}">
+    <p>User Name: <span th:text="${member.userName}"></span></p>
+    <p>Created Date: <span th:text="${member.createdDate}"></span></p>
+</div>
+<div th:unless="${member}">
+    <p>Member not found.</p>
+</div>
+<div>
+    <a href="/">Home</a>
+</div>
+</body>
+</html>
