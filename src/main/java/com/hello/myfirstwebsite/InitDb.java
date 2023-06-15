@@ -19,10 +19,8 @@ public class InitDb {
         private final EntityManager em;
 
         public void dbInit() {
-            Member.createMember("spring1", "")
         }
     }
 
 }
 
-}
