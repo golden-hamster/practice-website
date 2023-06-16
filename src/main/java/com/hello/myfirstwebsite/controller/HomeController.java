@@ -3,6 +3,7 @@ package com.hello.myfirstwebsite.controller;
 import com.hello.myfirstwebsite.dto.MemberCreateDto;
 import com.hello.myfirstwebsite.dto.MemberDto;
 import com.hello.myfirstwebsite.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,14 +19,26 @@ public class HomeController {
 
     private final MemberService memberService;
 
-    @GetMapping("/")
+//    @GetMapping("/")
     public String home() {
         return "home";
     }
 
-    @GetMapping("/login")
-    public String loginForm() {
-        return "login";
+    @GetMapping("/")
+    public String homeLogin(@CookieValue(name = "loginId", required = false)Long memberId, Model model) {
+        if (memberId == null) {
+            return "home";
+        }
+
+        //로그인
+        MemberDto loginMember = memberService.findById(memberId);
+        if (loginMember == null) {
+            return "home";
+        }
+
+        model.addAttribute("member", loginMember);
+        return "loginHome";
+
     }
 
     @GetMapping("/member/create")
@@ -35,16 +48,16 @@ public class HomeController {
     }
 
     @PostMapping("/member/create")
-    public String create(@ModelAttribute MemberCreateDto memberDto) {
+    public String create(@Valid @ModelAttribute MemberCreateDto memberDto) {
         Long memberId = memberService.join(memberDto);
         MemberDto member = memberService.findById(memberId);
-        String name = member.getName();
-        return "redirect:/member/" + name;
+        String loginId = member.getLoginId();
+        return "redirect:/member/" + loginId;
     }
 
-    @GetMapping("/member/{name}")
-    public String showMember(@PathVariable String name, Model model) {
-        MemberDto member = memberService.findByName(name);
+    @GetMapping("/member/{loginId}")
+    public String showMember(@PathVariable String loginId, Model model) {
+        MemberDto member = memberService.findByLoginId(loginId);
         model.addAttribute("member", member);
         return "member";
     }
@@ -56,7 +69,7 @@ public class HomeController {
         return "members";
     }
 
-    @PostMapping("/member/{memberId}/delete")
+    @PostMapping("/member/{loginId}/delete")
     public String deleteMember(@PathVariable Long memberId) {
         memberService.delete(memberId);
         return "redirect:/members";

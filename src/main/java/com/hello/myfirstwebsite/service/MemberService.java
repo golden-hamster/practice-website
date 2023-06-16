@@ -51,8 +51,8 @@ public class MemberService {
         return memberDto;
     }
 
-    public MemberDto findByName(String name) {
-        Member findMember = memberRepository.findByName(name);
+    public MemberDto findByLoginId(String loginId) {
+        Member findMember = memberRepository.findByLoginId(loginId).get();
         MemberDto memberDto = new MemberDto(findMember.getLoginId(), findMember.getName(), findMember.getCreatedDate());
 
         return memberDto;
@@ -77,8 +77,8 @@ public class MemberService {
 
     public MemberDto convertToDto(Member member) {
         MemberDto memberDto = new MemberDto(member.getLoginId(), member.getName(), member.getCreatedDate());
-
         return memberDto;
     }
+
 
 }

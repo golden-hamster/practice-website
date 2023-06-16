@@ -1,15 +1,14 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    hello
+hello
+<div th:text="|로그인: ${member.name}|">로그인 사용자 이름</div>
 <p>
-    <a href="/member/create">Create</a>
     <a href="/members">All Members</a>
-    <a href="/login">Login</a>
 </p>
 </body>
 </html>

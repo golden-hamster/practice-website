@@ -17,7 +17,7 @@
     </thead>
     <tbody>
     <tr th:each="member : ${members}">
-        <td><a th:href="@{member/{memberId}(memberId=member.id)}" th:text="${member.name}"></a></td>
+        <td><a th:href="@{member/{loginId}(loginId=${member.loginId})}" th:text="${member.name}"></a></td>
         <td th:text="${member.createdDate}"></td>
     </tr>
     </tbody>
