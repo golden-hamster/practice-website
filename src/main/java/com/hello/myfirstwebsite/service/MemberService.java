@@ -31,31 +31,31 @@ public class MemberService {
     /**
      * 회원 전체 조회
      */
-    public List<MemberDto> findAllMember() {
+    public List<Member> findAllMember() {
         List<Member> members = memberRepository.findAll();
-        List<MemberDto> memberDtoList = new ArrayList<>();
-        for (Member member : members) {
-            MemberDto memberDto = convertToDto(member);
-            memberDtoList.add(memberDto);
-        }
-        return memberDtoList;
+//        List<MemberDto> memberDtoList = new ArrayList<>();
+//        for (Member member : members) {
+//            MemberDto memberDto = convertToDto(member);
+//            memberDtoList.add(memberDto);
+//        }
+        return members;
     }
 
     /**
      * 회원 조회
      */
-    public MemberDto findById(Long id) {
+    public Member findById(Long id) {
         Member findMember = memberRepository.findById(id).get();
-        MemberDto memberDto = new MemberDto(findMember.getLoginId(), findMember.getName(), findMember.getCreatedDate());
+//        MemberDto memberDto = new MemberDto(findMember.getLoginId(), findMember.getName(), findMember.getCreatedDate());
 
-        return memberDto;
+        return findMember;
     }
 
-    public MemberDto findByLoginId(String loginId) {
+    public Member findByLoginId(String loginId) {
         Member findMember = memberRepository.findByLoginId(loginId).get();
-        MemberDto memberDto = new MemberDto(findMember.getLoginId(), findMember.getName(), findMember.getCreatedDate());
+//        MemberDto memberDto = new MemberDto(findMember.getLoginId(), findMember.getName(), findMember.getCreatedDate());
 
-        return memberDto;
+        return findMember;
     }
 
     /**
@@ -75,10 +75,10 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-    public MemberDto convertToDto(Member member) {
-        MemberDto memberDto = new MemberDto(member.getLoginId(), member.getName(), member.getCreatedDate());
-        return memberDto;
-    }
+//    public MemberDto convertToDto(Member member) {
+//        MemberDto memberDto = new MemberDto(member.getLoginId(), member.getName(), member.getCreatedDate());
+//        return memberDto;
+//    }
 
 
 }

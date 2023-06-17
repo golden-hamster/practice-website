@@ -6,9 +6,14 @@
 </head>
 <body>
 hello
-<div th:text="|로그인: ${member.name}|">로그인 사용자 이름</div>
+<div th:text="|로그인: ${memberName}|">로그인 사용자 이름</div>
 <p>
     <a href="/members">All Members</a>
+    <form action="/logout" method="post">
+    <button type="submit">
+        Logout
+    </button>
+</form>
 </p>
 </body>
 </html>

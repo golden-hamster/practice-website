@@ -1,8 +1,13 @@
 package com.hello.myfirstwebsite.controller;
 
+import com.hello.myfirstwebsite.domain.Member;
+import com.hello.myfirstwebsite.dto.LoginDto;
 import com.hello.myfirstwebsite.dto.MemberCreateDto;
 import com.hello.myfirstwebsite.dto.MemberDto;
 import com.hello.myfirstwebsite.service.MemberService;
+import com.hello.myfirstwebsite.session.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,18 +31,25 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String homeLogin(@CookieValue(name = "loginId", required = false)Long memberId, Model model) {
-        if (memberId == null) {
+    public String homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)LoginDto loginDto, Model model) {
+
+        //세션이 없으면 home
+//        HttpSession session = request.getSession(false);
+//        if (session == null) {
+//            return "home";
+//        }
+
+//        LoginDto loginMember = (LoginDto) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        if (loginDto == null) {
+            return "home";
+        }
+        Member member = memberService.findByLoginId(loginDto.getLoginId());
+        if (member == null) {
             return "home";
         }
 
-        //로그인
-        MemberDto loginMember = memberService.findById(memberId);
-        if (loginMember == null) {
-            return "home";
-        }
-
-        model.addAttribute("member", loginMember);
+        //세션이 유지되면 loginHome 으로 이동
+        model.addAttribute("memberName", member.getName());
         return "loginHome";
 
     }
@@ -50,22 +63,29 @@ public class HomeController {
     @PostMapping("/member/create")
     public String create(@Valid @ModelAttribute MemberCreateDto memberDto) {
         Long memberId = memberService.join(memberDto);
-        MemberDto member = memberService.findById(memberId);
+        Member member = memberService.findById(memberId);
         String loginId = member.getLoginId();
         return "redirect:/member/" + loginId;
     }
 
     @GetMapping("/member/{loginId}")
     public String showMember(@PathVariable String loginId, Model model) {
-        MemberDto member = memberService.findByLoginId(loginId);
-        model.addAttribute("member", member);
+        Member member = memberService.findByLoginId(loginId);
+        MemberDto memberDto = convertToDto(member);
+        model.addAttribute("member", memberDto);
         return "member";
     }
 
     @GetMapping("/members")
     public String showAllMembers(Model model) {
-        List<MemberDto> members = memberService.findAllMember();
-        model.addAttribute("members", members);
+        List<Member> members = memberService.findAllMember();
+
+        List<MemberDto> memberDtoList = new ArrayList<>();
+        for (Member member : members) {
+            MemberDto memberDto = convertToDto(member);
+            memberDtoList.add(memberDto);
+        }
+        model.addAttribute("members", memberDtoList);
         return "members";
     }
 
@@ -73,6 +93,11 @@ public class HomeController {
     public String deleteMember(@PathVariable Long memberId) {
         memberService.delete(memberId);
         return "redirect:/members";
+    }
+
+    public MemberDto convertToDto(Member member) {
+        MemberDto memberDto = new MemberDto(member.getLoginId(), member.getName(), member.getCreatedDate());
+        return memberDto;
     }
 
 
