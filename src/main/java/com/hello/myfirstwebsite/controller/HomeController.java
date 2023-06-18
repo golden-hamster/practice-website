@@ -95,15 +95,20 @@ public class HomeController {
         return "redirect:/members";
     }
 
+    @GetMapping("/member/{loginId}/createPost")
+    public String createPostForm(@PathVariable String loginId, Model model) {
+
+        Member member = memberService.findByLoginId(loginId);
+        MemberDto memberDto = convertToDto(member);
+
+        model.addAttribute(memberDto);
+        return "createPost";
+    }
+
     public MemberDto convertToDto(Member member) {
         MemberDto memberDto = new MemberDto(member.getLoginId(), member.getName(), member.getCreatedDate());
         return memberDto;
     }
-
-//    @GetMapping("/member/{loginId}/createPost")
-//    public String createPostForm(@PathVariable String loginId, @ModelAttribute) {
-//        return "createPost";
-//    }
 
 
 }
