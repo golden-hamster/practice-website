@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,24 +17,25 @@ public class Member {
     @Id
     private Long id;
 
-    @NotBlank
     private String loginId;
 
+    private String name;
+
+    private String password;
+
+    private LocalDateTime createdDate;
+
+
+    /**
+     * setter
+     */
     public void setLoginId(String loginId) {
         this.loginId = loginId;
     }
 
-    @NotBlank
-    private String name;
-
-    @NotBlank
-    private String password;
-
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
-
-    private LocalDateTime createdDate;
 
     public static Member createMember(String loginId, String name, String password) {
         Member member = new Member();

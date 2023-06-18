@@ -100,5 +100,10 @@ public class HomeController {
         return memberDto;
     }
 
+//    @GetMapping("/member/{loginId}/createPost")
+//    public String createPostForm(@PathVariable String loginId, @ModelAttribute) {
+//        return "createPost";
+//    }
+
 
 }
