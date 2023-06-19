@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error</title>
+</head>
+<body>
+<h1>오류 발생</h1>
+<div>죄송합니다. 요청하신 페이지를 표시할 수 없습니다.</div>
+<div>다음은 발생한 오류에 대한 자세한 정보입니다:</div>
+<div th:text="|timestamp: ${timestamp}|"></div>
+<div th:text="|status: ${status}|"></div>
+<div th:text="|error: ${error}|"></div>
+<div th:text="|exception: ${exception}|"></div>
+<p>Error Message: 페이지를 찾을 수 없습니다.</p>
+</body>
+</html>

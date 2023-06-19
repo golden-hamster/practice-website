@@ -1,9 +1,11 @@
 package com.hello.myfirstwebsite.controller;
 
 import com.hello.myfirstwebsite.domain.Member;
+import com.hello.myfirstwebsite.domain.Post;
 import com.hello.myfirstwebsite.dto.LoginDto;
 import com.hello.myfirstwebsite.dto.MemberCreateDto;
 import com.hello.myfirstwebsite.dto.MemberDto;
+import com.hello.myfirstwebsite.dto.PostDto;
 import com.hello.myfirstwebsite.service.MemberService;
 import com.hello.myfirstwebsite.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,7 +57,7 @@ public class HomeController {
     }
 
     @GetMapping("/member/create")
-    public String createForm(@ModelAttribute MemberCreateDto memberDto) {
+    public String createForm() {
 
         return "create";
     }
@@ -99,10 +101,17 @@ public class HomeController {
     public String createPostForm(@PathVariable String loginId, Model model) {
 
         Member member = memberService.findByLoginId(loginId);
-        MemberDto memberDto = convertToDto(member);
-
-        model.addAttribute(memberDto);
+        String name = member.getName();
+        model.addAttribute("name", name);
         return "createPost";
+    }
+
+    @PostMapping("/member/{loginId}/createPost")
+    public String createPost(@PathVariable String loginId, @ModelAttribute PostDto postDto) {
+
+        Member member = memberService.findByLoginId(loginId);
+
+        return "redirect:/";
     }
 
     public MemberDto convertToDto(Member member) {

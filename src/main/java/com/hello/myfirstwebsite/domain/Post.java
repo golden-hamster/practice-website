@@ -22,7 +22,6 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member member;
 
-
     private String title;
 
     private String description;
@@ -30,5 +29,15 @@ public class Post {
     private LocalDateTime createdTime;
 
     private String author;
+
+    public static Post createPost(Member member, String title, String description, String author) {
+        Post post = new Post();
+        post.member = member;
+        post.title = title;
+        post.description = description;
+        post.author = author;
+        post.createdTime = LocalDateTime.now();
+        return post;
+    }
 
 }
