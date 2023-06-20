@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Data
 public class PostDto {
 
-    @NotBlank
-    private Member member;
+//    @NotBlank
+//    private Member member;
 
     @NotBlank
     private String title;

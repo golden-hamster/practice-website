@@ -16,7 +16,7 @@ public interface PostMapper {
 
     void update(@Param("id") Long id, @Param("updateParam") PostDto postDto);
 
-    List<Post> findALl(PostSearchCond postSearch);
-
     Optional<Post> findById(Long id);
+
+    List<Post> findALl(PostSearchCond postSearch);
 }

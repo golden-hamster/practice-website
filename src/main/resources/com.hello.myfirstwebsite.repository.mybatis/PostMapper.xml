@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hello.myfirstwebsite.repository.mybatis.PostMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into post(member, title, description, author)
+        values (#{member}, #{title}, #{description}, #{author})
+    </insert>
+
+    <update id="update">
+        update post
+        set title=#{updateParam.title},
+            description=#{updateParam.description}
+            author=#{updateParam.author}
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultType="Post">
+        select id, member, title, description, author
+        from post
+        where id = #{id}
+    </select>
+
+    <select id="findAll" resultType="Post">
+        select id, member, title, description, author
+        from post
+        <where>
+            <if test="title != null and title != ''">
+                and title like concat('%', #{title}, '%')
+            </if>
+            <if test="author != null and author != '''">
+                and author like concat('%', #{author}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
