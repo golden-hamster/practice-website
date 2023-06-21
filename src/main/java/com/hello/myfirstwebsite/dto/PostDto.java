@@ -24,6 +24,4 @@ public class PostDto {
 
     private LocalDateTime createdTime;
 
-    @NotBlank
-    private String author;
 }

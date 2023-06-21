@@ -28,14 +28,12 @@ public class Post {
 
     private LocalDateTime createdTime;
 
-    private String author;
 
-    public static Post createPost(Member member, String title, String description, String author) {
+    public static Post createPost(Member member, String title, String description) {
         Post post = new Post();
         post.member = member;
         post.title = title;
         post.description = description;
-        post.author = author;
         post.createdTime = LocalDateTime.now();
         return post;
     }

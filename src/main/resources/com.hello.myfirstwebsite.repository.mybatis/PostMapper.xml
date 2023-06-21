@@ -4,33 +4,36 @@
 <mapper namespace="com.hello.myfirstwebsite.repository.mybatis.PostMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into post(member, title, description, author)
-        values (#{member}, #{title}, #{description}, #{author})
+        insert into post(member_id, title, description)
+        values (#{member.id}, #{title}, #{description})
     </insert>
 
     <update id="update">
         update post
         set title=#{updateParam.title},
             description=#{updateParam.description}
-            author=#{updateParam.author}
         where id = #{id}
     </update>
 
     <select id="findById" resultType="Post">
-        select id, member, title, description, author
+        select id, member_id, title, description
         from post
         where id = #{id}
     </select>
 
     <select id="findAll" resultType="Post">
-        select id, member, title, description, author
+        select id, member_id, title, description
         from post
         <where>
             <if test="title != null and title != ''">
                 and title like concat('%', #{title}, '%')
             </if>
-            <if test="author != null and author != '''">
-                and author like concat('%', #{author}, '%')
+            <if test="name != null and name != ''">
+                and member_id in(
+                    select id
+                    from member
+                    where name like concat('%', #{name}, '%')
+                )
             </if>
         </where>
     </select>
