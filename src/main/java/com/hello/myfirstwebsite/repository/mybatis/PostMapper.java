@@ -5,6 +5,7 @@ import com.hello.myfirstwebsite.dto.PostDto;
 import com.hello.myfirstwebsite.dto.PostSearchCond;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
