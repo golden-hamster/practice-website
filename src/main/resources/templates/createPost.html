@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>게시판</title>
 </head>
 <body>
-<h1>게시판</h1>
-
-<form action="/board" method="post">
+<h1>Create Post</h1>
+<h2 th:text="${name}"></h2>
+<form action="/member/${loginId}/createPost" method="post">
     <input type="text" name="title" placeholder="제목" required>
     <br>
     <textarea name="description" placeholder="내용" required></textarea>
@@ -14,21 +15,6 @@
     <button type="submit">글쓰기</button>
 </form>
 
-<hr>
 
-<h2>글 목록</h2>
-<ul>
-    <li>
-        <strong>글 제목 1</strong>
-        <p>글 내용 1</p>
-        <a href="/board/1">자세히 보기</a>
-    </li>
-    <li>
-        <strong>글 제목 2</strong>
-        <p>글 내용 2</p>
-        <a href="/board/2">자세히 보기</a>
-    </li>
-    <!-- 글 목록을 서버에서 동적으로 생성할 수 있습니다. -->
-</ul>
 </body>
 </html>

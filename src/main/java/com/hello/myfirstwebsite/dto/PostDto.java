@@ -22,6 +22,11 @@ public class PostDto {
     @NotBlank
     private String description;
 
-    private LocalDateTime createdTime;
+    private String author;
 
+    public PostDto(String title, String description, String author) {
+        this.title = title;
+        this.description = description;
+        this.author = author;
+    }
 }

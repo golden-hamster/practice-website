@@ -15,5 +15,6 @@ public interface PostRepository {
 
     Optional<Post> findById(Long id);
 
-    List<Post> findALl(PostSearchCond postSearch);
+    List<Post> findAll(PostSearchCond postSearch);
+
 }

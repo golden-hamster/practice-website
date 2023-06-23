@@ -9,6 +9,7 @@ hello
 <div th:text="|로그인: ${memberName}|">로그인 사용자 이름</div>
 <p>
     <a href="/members">All Members</a>
+    <a th:href="@{~/member/{loginId}/community(loginId=${loginId})}">Community</a>
     <form action="/logout" method="post">
     <button type="submit">
         Logout

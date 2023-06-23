@@ -23,7 +23,7 @@ class MybatisPostRepositoryTest {
     public void save(){
         //given
         Member member = Member.createMember("test123", "TEST1", "123");
-        Post post = Post.createPost(member, "test...", "This test is...");
+        Post post = Post.createPost(member.getId(), "test...", "This test is...");
 
         //when
 //        Post savedPost = postRepository.save(post);

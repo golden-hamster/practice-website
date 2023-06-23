@@ -1,13 +1,9 @@
 package com.hello.myfirstwebsite.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -18,23 +14,25 @@ public class Post {
     @Column(name = "post_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "member_id")
+//    private Member member;
+    @Column(name = "member_id")
+    private Long memberId;
 
     private String title;
 
     private String description;
 
-    private LocalDateTime createdTime;
+    private LocalDateTime createdDate;
 
 
-    public static Post createPost(Member member, String title, String description) {
+    public static Post createPost(Long memberId, String title, String description) {
         Post post = new Post();
-        post.member = member;
+        post.memberId = memberId;
         post.title = title;
         post.description = description;
-        post.createdTime = LocalDateTime.now();
+        post.createdDate = LocalDateTime.now();
         return post;
     }
 

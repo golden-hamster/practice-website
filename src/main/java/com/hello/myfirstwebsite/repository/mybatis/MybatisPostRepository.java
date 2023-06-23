@@ -34,7 +34,7 @@ public class MybatisPostRepository implements PostRepository {
     }
 
     @Override
-    public List<Post> findALl(PostSearchCond cond) {
-        return postMapper.findALl(cond);
+    public List<Post> findAll(PostSearchCond cond) {
+        return postMapper.findAll(cond);
     }
 }

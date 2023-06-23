@@ -52,6 +52,7 @@ public class HomeController {
 
         //세션이 유지되면 loginHome 으로 이동
         model.addAttribute("memberName", member.getName());
+        model.addAttribute("loginId", member.getLoginId());
         return "loginHome";
 
     }
@@ -95,23 +96,6 @@ public class HomeController {
     public String deleteMember(@PathVariable Long memberId) {
         memberService.delete(memberId);
         return "redirect:/members";
-    }
-
-    @GetMapping("/member/{loginId}/createPost")
-    public String createPostForm(@PathVariable String loginId, Model model) {
-
-        Member member = memberService.findByLoginId(loginId);
-        String name = member.getName();
-        model.addAttribute("name", name);
-        return "createPost";
-    }
-
-    @PostMapping("/member/{loginId}/createPost")
-    public String createPost(@PathVariable String loginId, @ModelAttribute PostDto postDto) {
-
-        Member member = memberService.findByLoginId(loginId);
-
-        return "redirect:/";
     }
 
     public MemberDto convertToDto(Member member) {

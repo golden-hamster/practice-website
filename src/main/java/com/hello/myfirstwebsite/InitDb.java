@@ -1,6 +1,7 @@
 package com.hello.myfirstwebsite;
 
 import com.hello.myfirstwebsite.domain.Member;
+import com.hello.myfirstwebsite.domain.Post;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,15 @@ public class InitDb {
             em.persist(member2);
             em.persist(member3);
 
+            Post post1 = Post.createPost(member1.getId(), "Test title1", "desc is ...");
+            Post post2 = Post.createPost(member2.getId(), "Test title2", "desc is ...");
+            Post post3 = Post.createPost(member3.getId(), "Test title3", "desc is ...");
+
+            em.persist(post1);
+            em.persist(post2);
+            em.persist(post3);
         }
+
     }
 
 }

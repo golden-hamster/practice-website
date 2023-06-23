@@ -5,7 +5,7 @@
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into post(member_id, title, description)
-        values (#{member.id}, #{title}, #{description})
+        values (#{memberId}, #{title}, #{description})
     </insert>
 
     <update id="update">
@@ -22,7 +22,7 @@
     </select>
 
     <select id="findAll" resultType="Post">
-        select id, member_id, title, description
+        select post_id, member_id, title, description, created_Date
         from post
         <where>
             <if test="title != null and title != ''">
