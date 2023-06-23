@@ -73,7 +73,7 @@ public class CommunityController {
     public CommunityDto convertToCommunityDto(Post post) {
         Member findMember = memberService.findById(post.getMemberId());
 
-        return new CommunityDto(post.getTitle(), findMember.getName(), findMember.getLoginId(), post.getCreatedDate());
+        return new CommunityDto(post.getId(), post.getTitle(), findMember.getName(), findMember.getLoginId(), post.getCreatedDate());
     }
 
     public PostDto convertToPostDto(Post post) {

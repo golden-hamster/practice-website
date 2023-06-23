@@ -8,17 +8,18 @@ import java.time.LocalDateTime;
 @Data
 public class CommunityDto {
 
-    @NotBlank
+    private Long postId;
+
     private String title;
 
-    @NotBlank
     private String author;
 
     private String loginId;
 
     private LocalDateTime createdDate;
 
-    public CommunityDto(String title, String author, String loginId, LocalDateTime createdDate) {
+    public CommunityDto(Long postId,String title, String author, String loginId, LocalDateTime createdDate) {
+        this.postId = postId;
         this.title = title;
         this.author = author;
         this.loginId = loginId;

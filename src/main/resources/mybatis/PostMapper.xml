@@ -16,9 +16,9 @@
     </update>
 
     <select id="findById" resultType="Post">
-        select id, member_id, title, description
+        select post_id, member_id, title, description
         from post
-        where id = #{id}
+        where post_id = #{id}
     </select>
 
     <select id="findAll" resultType="Post">

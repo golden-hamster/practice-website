@@ -16,8 +16,8 @@
     </thead>
     <tbody>
     <tr th:each="post : ${posts}">
-        <td>/member/{loginId}/community/post/{postId}
-            <a th:href="@{~/member/{}" th:text="${post.title}"></a>
+        <td>
+            <a th:href="@{~/member/{loginId}/community/post/{postId}(loginId=${post.loginId}, postId=${post.postId})}" th:text="${post.title}"></a>
         </td>
         <td>
             <a th:href="@{~/member/{loginId}(loginId=${post.loginId})}" th:text="${post.author}"></a>

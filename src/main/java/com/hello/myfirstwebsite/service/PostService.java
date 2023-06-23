@@ -16,6 +16,7 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    @Transactional
     public Long save(Post post) {
         Post savedPost = postRepository.save(post);
         return savedPost.getId();

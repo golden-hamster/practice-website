@@ -2,12 +2,15 @@ package com.hello.myfirstwebsite.repository.mybatis;
 
 import com.hello.myfirstwebsite.domain.Member;
 import com.hello.myfirstwebsite.domain.Post;
+import com.hello.myfirstwebsite.dto.PostSearchCond;
 import com.hello.myfirstwebsite.repository.PostRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,15 +27,19 @@ class MybatisPostRepositoryTest {
         //given
         Member member = Member.createMember("test123", "TEST1", "123");
         Post post = Post.createPost(member.getId(), "test...", "This test is...");
+        PostSearchCond cond = new PostSearchCond();
 
         //when
-//        Post savedPost = postRepository.save(post);
         postMapper.save(post);
+
         //then
+        List<Post> all = postMapper.findAll(cond);
+        for (Post post1 : all) {
+            System.out.println("post1 = " + post1.getId());
+        }
 
-//        Post findPost = postRepository.findById(member.getId()).get();
-//        Assertions.assertThat(findPost).isEqualTo(savedPost);
-
+        Post findPost = postMapper.findById(post.getId()).get();
+        System.out.println("findPost.getId() = " + findPost.getId());
     }
 
 }
