@@ -22,7 +22,7 @@
     </select>
 
     <select id="findAll" resultType="Post">
-        select id, member_id, title, description
+        select post_id, member_id, title, description
         from post
         <where>
             <if test="title != null and title != ''">

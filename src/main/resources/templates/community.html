@@ -17,13 +17,16 @@
     <tbody>
     <tr th:each="post : ${posts}">
         <td>
-            <a th:href="@{~/member/{loginId}/community/post/{postId}(loginId=${post.loginId}, postId=${post.postId})}" th:text="${post.title}"></a>
+            <a th:href="${post.postId}" th:text="${post.title}"></a>
         </td>
         <td>
             <a th:href="@{~/member/{loginId}(loginId=${post.loginId})}" th:text="${post.author}"></a>
         </td>
         <td>
             <div th:text="${post.createdDate}"></div>
+        </td>
+        <td>
+            <div th:text="${post.postId}"></div>
         </td>
     </tr>
     <!--    <tr th:each="post : ${posts}">-->
@@ -33,7 +36,7 @@
     <!--    </tr>-->
     </tbody>
 </table>
-<button onclick="location.href='/member/${loginId}/createPost'">글쓰기</button>
+<button onclick="location.href='/community/createPost'">글쓰기</button>
 <a href="/">Home</a>
 </body>
 </html>

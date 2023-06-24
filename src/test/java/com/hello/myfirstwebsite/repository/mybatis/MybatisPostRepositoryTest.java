@@ -4,6 +4,7 @@ import com.hello.myfirstwebsite.domain.Member;
 import com.hello.myfirstwebsite.domain.Post;
 import com.hello.myfirstwebsite.dto.PostSearchCond;
 import com.hello.myfirstwebsite.repository.PostRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ class MybatisPostRepositoryTest {
 
         Post findPost = postMapper.findById(post.getId()).get();
         System.out.println("findPost.getId() = " + findPost.getId());
+        System.out.println("findPost.getCreatedDate() = " + findPost.getCreatedDate());
+        System.out.println("findPost.getTitle() = " + findPost.getTitle());
     }
 
 }
