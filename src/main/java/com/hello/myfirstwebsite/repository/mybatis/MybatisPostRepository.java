@@ -37,4 +37,9 @@ public class MybatisPostRepository implements PostRepository {
     public List<Post> findAll(PostSearchCond cond) {
         return postMapper.findAll(cond);
     }
+
+    @Override
+    public void delete(Long id) {
+        postMapper.delete(id);
+    }
 }

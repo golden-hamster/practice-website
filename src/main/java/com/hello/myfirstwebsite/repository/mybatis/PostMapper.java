@@ -20,4 +20,6 @@ public interface PostMapper {
     Optional<Post> findById(Long id);
 
     List<Post> findAll(PostSearchCond cond);
+
+    void delete(Long id);
 }

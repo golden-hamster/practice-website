@@ -17,7 +17,7 @@
     <tbody>
     <tr th:each="post : ${posts}">
         <td>
-            <a th:href="${post.postId}" th:text="${post.title}"></a>
+            <a th:href="@{~/community/{postId}(postId=${post.postId})}" th:text="${post.title}"></a>
         </td>
         <td>
             <a th:href="@{~/member/{loginId}(loginId=${post.loginId})}" th:text="${post.author}"></a>
@@ -26,7 +26,7 @@
             <div th:text="${post.createdDate}"></div>
         </td>
         <td>
-            <div th:text="${post.postId}"></div>
+            <div th:text="${post.loginId}"></div>
         </td>
     </tr>
     <!--    <tr th:each="post : ${posts}">-->

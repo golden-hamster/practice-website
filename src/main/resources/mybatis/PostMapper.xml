@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hello.myfirstwebsite.repository.mybatis.PostMapper">
 
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" useGeneratedKeys="true" keyProperty="postId">
         insert into post(member_id, title, description, created_date)
         values (#{memberId}, #{title}, #{description}, #{createdDate})
     </insert>
@@ -16,13 +16,13 @@
     </update>
 
     <select id="findById" resultType="Post">
-        select post_id, member_id, title, description
+        select post_id, member_id, title, description, created_date
         from post
         where post_id = #{id}
     </select>
 
     <select id="findAll" resultType="Post">
-        select post_id, member_id, title, description, created_Date
+        select post_id, member_id, title, description, created_date
         from post
 <!--        <where>-->
 <!--            <if test="title != null and title != ''">-->
@@ -38,4 +38,8 @@
 <!--        </where>-->
     </select>
 
+    <delete id="delete">
+        delete from post
+        where post_id = #{id}
+    </delete>
 </mapper>

@@ -43,6 +43,7 @@ public class CommunityController {
         Member member = memberService.findByLoginId(loginDto.getLoginId());
         Post post = Post.createPost(member.getId(), postDto.getTitle(), postDto.getDescription());
         Long postId = postService.save(post);
+        log.info("postId={}", postId);
         /**
          * redirectAttribute 추가해야됨
          */
@@ -50,17 +51,25 @@ public class CommunityController {
     }
 
     @GetMapping("/community/{postId}")
-    public String postForm(@PathVariable(name = "postId") Long postId, Model model) {
-
+    public String postForm(@PathVariable(name = "postId") Long postId,
+                           @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) LoginDto loginDto,
+                           Model model) {
         Post findpost = postService.findById(postId);
+        Member findMember = memberService.findByLoginId(loginDto.getLoginId());
+
+        boolean loginUser = findpost.getMemberId().equals(findMember.getId());
+
         PostDto postDto = convertToPostDto(findpost);
         model.addAttribute("post", postDto);
+        model.addAttribute("postId", postId);
+        model.addAttribute("loginUser", loginUser);
         return "post";
     }
 
     @GetMapping("/community")
     public String community(@ModelAttribute PostSearchCond cond, Model model) {
         List<Post> posts = postService.findAll(cond);
+        log.info("postId={}", posts.get(0).getPostId());
         List<CommunityDto> communityDtoList = new ArrayList<>();
         for (Post post : posts) {
             CommunityDto communityDto = convertToCommunityDto(post);
@@ -70,10 +79,15 @@ public class CommunityController {
         return "community";
     }
 
+    @PostMapping("/deletePost")
+    public String deletePost(Long postId) {
+        postService.delete(postId);
+        return "redirect:/community";
+    }
+
     public CommunityDto convertToCommunityDto(Post post) {
         Member findMember = memberService.findById(post.getMemberId());
-
-        return new CommunityDto(post.getId(), post.getTitle(), findMember.getName(), findMember.getLoginId(), post.getCreatedDate());
+        return new CommunityDto(post.getPostId(), post.getTitle(), findMember.getName(), findMember.getLoginId(), post.getCreatedDate());
     }
 
     public PostDto convertToPostDto(Post post) {

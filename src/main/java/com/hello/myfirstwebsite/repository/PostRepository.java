@@ -17,4 +17,5 @@ public interface PostRepository {
 
     List<Post> findAll(PostSearchCond postSearch);
 
+    void delete(Long id);
 }
