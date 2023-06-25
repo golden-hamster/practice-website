@@ -9,15 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@RequiredArgsConstructor
+//@Configuration
+//@RequiredArgsConstructor
 public class MyConfig {
 
-    private final PostMapper postMapper;
+//    private final PostMapper postMapper;
 
-    @Bean
+//    @Bean
     public PostRepository postRepository(PostMapper postMapper) {
         return new MybatisPostRepository(postMapper);
-
     }
 }

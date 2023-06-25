@@ -57,12 +57,12 @@ public class CommunityController {
         Post findpost = postService.findById(postId);
         Member findMember = memberService.findByLoginId(loginDto.getLoginId());
 
-        boolean loginUser = findpost.getMemberId().equals(findMember.getId());
+        boolean loginUserFlag = findpost.getMemberId().equals(findMember.getId());
 
         PostDto postDto = convertToPostDto(findpost);
         model.addAttribute("post", postDto);
         model.addAttribute("postId", postId);
-        model.addAttribute("loginUser", loginUser);
+        model.addAttribute("loginUserFlag", loginUserFlag);
         return "post";
     }
 

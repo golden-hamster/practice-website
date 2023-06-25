@@ -14,17 +14,22 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Long id;
+    private Long commentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private Long memberId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
+    private Long postId;
+
+    private String description;
 
     private LocalDateTime createdDate;
 
-    private String description;
+    public static Comment createComment(Long memberId, Long postId, String description) {
+        Comment comment = new Comment();
+        comment.memberId = memberId;
+        comment.postId = postId;
+        comment.description = description;
+        comment.createdDate = LocalDateTime.now();
+        return comment;
+    }
 }

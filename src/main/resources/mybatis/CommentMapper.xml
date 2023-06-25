@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hello.myfirstwebsite.repository.mybatis.CommentMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="commentId">
+        insert into comment(member_id, post_id, description, created_date)
+        values (#{memberId}, #{postId}, #{description}, #{createdDate})
+    </insert>
+
+    <update id="update">
+        update post
+        set author=#{commentDto.author},
+        description=#{commentDto.description}
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultType="Comment">
+        select comment_id, member_id, post_id, description, created_date
+        from comment
+        where comment_id = #{commentId}
+    </select>
+
+    <select id="findAll" resultType="Post">
+        select comment_id, member_id, post_id, description, created_date
+        from comment
+    </select>
+
+    <delete id="delete">
+        delete from comment
+        where comment_id = #{commentId}
+    </delete>
+</mapper>
