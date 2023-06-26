@@ -27,6 +27,10 @@ public class CommentService {
         return commentRepository.findById(commentId);
     }
 
+    public List<Comment> findByPostId(Long postId) {
+        return commentRepository.findByPostId(postId);
+    }
+
     public List<Comment> findAll() {
         return commentRepository.findAll();
     }

@@ -33,6 +33,11 @@ public class MybatisCommentRepository implements CommentRepository {
     }
 
     @Override
+    public List<Comment> findByPostId(Long postId) {
+        return commentMapper.findByPostId(postId);
+    }
+
+    @Override
     public List<Comment> findAll() {
         return commentMapper.findAll();
     }

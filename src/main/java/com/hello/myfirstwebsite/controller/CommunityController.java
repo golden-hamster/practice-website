@@ -1,11 +1,10 @@
 package com.hello.myfirstwebsite.controller;
 
+import com.hello.myfirstwebsite.domain.Comment;
 import com.hello.myfirstwebsite.domain.Member;
 import com.hello.myfirstwebsite.domain.Post;
-import com.hello.myfirstwebsite.dto.CommunityDto;
-import com.hello.myfirstwebsite.dto.LoginDto;
-import com.hello.myfirstwebsite.dto.PostDto;
-import com.hello.myfirstwebsite.dto.PostSearchCond;
+import com.hello.myfirstwebsite.dto.*;
+import com.hello.myfirstwebsite.service.CommentService;
 import com.hello.myfirstwebsite.service.MemberService;
 import com.hello.myfirstwebsite.service.PostService;
 import com.hello.myfirstwebsite.session.SessionConst;
@@ -25,6 +24,7 @@ public class CommunityController {
 
     private final PostService postService;
     private final MemberService memberService;
+    private final CommentService commentService;
 
     @GetMapping("/community/createPost")
     public String createPostForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)LoginDto loginDto,
@@ -59,11 +59,30 @@ public class CommunityController {
 
         boolean loginUserFlag = findpost.getMemberId().equals(findMember.getId());
 
+        List<Comment> comments = commentService.findByPostId(postId);
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        for (Comment comment : comments) {
+            CommentDto commentDto = convertToCommentDto(comment);
+            commentDtoList.add(commentDto);
+        }
+
         PostDto postDto = convertToPostDto(findpost);
+
+        model.addAttribute("comments", commentDtoList);
         model.addAttribute("post", postDto);
         model.addAttribute("postId", postId);
         model.addAttribute("loginUserFlag", loginUserFlag);
         return "post";
+    }
+
+    @PostMapping("/community/{postId}/comment")
+    public String createComment(@PathVariable Long postId,
+                                @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) LoginDto loginDto,
+                                @ModelAttribute CommentDto commentDto) {
+        Member findMember = memberService.findByLoginId(loginDto.getLoginId());
+        Comment comment = Comment.createComment(findMember.getId(), postId, commentDto.getDescription());
+        commentService.save(comment);
+        return "redirect:/community/" + postId;
     }
 
     @GetMapping("/community")
@@ -94,6 +113,11 @@ public class CommunityController {
         Member findMember = memberService.findById(post.getMemberId());
 
         return new PostDto(post.getTitle(), post.getDescription(), findMember.getName());
+    }
+
+    public CommentDto convertToCommentDto(Comment comment) {
+        Member findMember = memberService.findById(comment.getMemberId());
+        return new CommentDto(comment.getDescription(), findMember.getName(), comment.getCreatedDate());
     }
 
 }

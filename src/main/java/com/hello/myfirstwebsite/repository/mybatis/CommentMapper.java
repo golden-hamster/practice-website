@@ -20,6 +20,8 @@ public interface CommentMapper {
 
     Optional<Comment> findById(Long commentId);
 
+    List<Comment> findByPostId(Long postId);
+
     List<Comment> findAll();
 
     void delete(Long commentId);

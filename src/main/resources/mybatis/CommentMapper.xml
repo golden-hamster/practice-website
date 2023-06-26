@@ -21,9 +21,15 @@
         where comment_id = #{commentId}
     </select>
 
-    <select id="findAll" resultType="Post">
+    <select id="findAll" resultType="Comment">
         select comment_id, member_id, post_id, description, created_date
         from comment
+    </select>
+
+    <select id="findByPostId" resultType="Comment">
+        select comment_id, member_id, post_id, description, created_date
+        from comment
+        where post_id=#{postId}
     </select>
 
     <delete id="delete">
