@@ -3,12 +3,14 @@ package com.hello.myfirstwebsite.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 public class Comment {
 
     @Id

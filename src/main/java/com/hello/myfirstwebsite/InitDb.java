@@ -1,7 +1,9 @@
 package com.hello.myfirstwebsite;
 
+import com.hello.myfirstwebsite.domain.Comment;
 import com.hello.myfirstwebsite.domain.Member;
 import com.hello.myfirstwebsite.domain.Post;
+import com.hello.myfirstwebsite.service.CommentService;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,8 @@ public class InitDb {
     static class InitService {
 
         private final EntityManager em;
+        //CommentService.save() test
+        private final CommentService commentService;
 
         public void dbInit() {
             Member member1 = Member.createMember("test1", "testName1", "123");
@@ -45,6 +49,17 @@ public class InitDb {
             em.persist(post1);
             em.persist(post2);
             em.persist(post3);
+
+            Comment comment1 = Comment.createComment(member1.getId(), post1.getPostId(), "comment is...");
+            Comment comment2 = Comment.createComment(member2.getId(), post1.getPostId(), "comment is...");
+            Comment comment3 = Comment.createComment(member3.getId(), post1.getPostId(), "comment is...");
+
+//            em.persist(comment1);
+//            em.persist(comment2);
+//            em.persist(comment3);
+            commentService.save(comment1);
+            commentService.save(comment2);
+            commentService.save(comment3);
         }
 
     }
