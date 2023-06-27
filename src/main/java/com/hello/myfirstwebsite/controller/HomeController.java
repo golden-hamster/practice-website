@@ -65,10 +65,12 @@ public class HomeController {
 
     @PostMapping("/member/create")
     public String create(@Valid @ModelAttribute MemberCreateDto memberDto) {
-        Long memberId = memberService.join(memberDto);
-        Member member = memberService.findById(memberId);
-        String loginId = member.getLoginId();
-        return "redirect:/member/" + loginId;
+//        Long memberId = memberService.join(memberDto);
+//        Member member = memberService.findById(memberId);
+//        String loginId = member.getLoginId();
+        Member member = Member.createMember(memberDto.getLoginId(), memberDto.getName(), memberDto.getPassword());
+        memberService.join(member);
+        return "redirect:/member/" + member.getLoginId();
     }
 
     @GetMapping("/member/{loginId}")

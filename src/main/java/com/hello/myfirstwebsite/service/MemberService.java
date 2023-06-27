@@ -22,8 +22,8 @@ public class MemberService {
      * 회원 가입
      */
     @Transactional
-    public Long join(MemberCreateDto memberDto) {
-        Member member = Member.createMember(memberDto.getLoginId(),memberDto.getName(), memberDto.getPassword());
+    public Long join(Member member) {
+//        Member member = Member.createMember(memberDto.getLoginId(),memberDto.getName(), memberDto.getPassword());
         memberRepository.save(member);
         return member.getId();
     }
