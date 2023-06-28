@@ -31,5 +31,35 @@
         <button type="submit">삭제</button>
     </form>
 </div>
+<div th:if="${loginUserFlag}">
+    <h3>댓글 작성</h3>
+    <form th:action="@{~/createComment}" method="post">
+<!--        <input type="hidden" name="postId" th:value="${postId}" />-->
+        <input type="hidden" name="userName" th:value="${userName}" />
+        <textarea name="description"></textarea>
+        <button type="submit">댓글 작성</button>
+    </form>
+</div>
+<div>
+    <h3>댓글 목록</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>내용</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${comments}">
+            <td th:text="${comment.description}"></td>
+            <td th:text="${comment.author}"></td>
+            <td th:text="${comment.createdDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
 </body>
 </html>
