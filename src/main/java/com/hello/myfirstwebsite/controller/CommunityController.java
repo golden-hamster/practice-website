@@ -26,6 +26,19 @@ public class CommunityController {
     private final MemberService memberService;
     private final CommentService commentService;
 
+    @GetMapping("/community")
+    public String community(@ModelAttribute PostSearchCond cond, Model model) {
+        List<Post> posts = postService.findAll(cond);
+        log.info("postId={}", posts.get(0).getPostId());
+        List<CommunityDto> communityDtoList = new ArrayList<>();
+        for (Post post : posts) {
+            CommunityDto communityDto = convertToCommunityDto(post);
+            communityDtoList.add(communityDto);
+        }
+        model.addAttribute("posts", communityDtoList);
+        return "community";
+    }
+
     @GetMapping("/community/createPost")
     public String createPostForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)LoginDto loginDto,
                                  Model model) {
@@ -83,19 +96,6 @@ public class CommunityController {
         Comment comment = Comment.createComment(findMember.getId(), postId, commentDto.getDescription());
         commentService.save(comment);
         return "redirect:/community/" + postId;
-    }
-
-    @GetMapping("/community")
-    public String community(@ModelAttribute PostSearchCond cond, Model model) {
-        List<Post> posts = postService.findAll(cond);
-        log.info("postId={}", posts.get(0).getPostId());
-        List<CommunityDto> communityDtoList = new ArrayList<>();
-        for (Post post : posts) {
-            CommunityDto communityDto = convertToCommunityDto(post);
-            communityDtoList.add(communityDto);
-        }
-        model.addAttribute("posts", communityDtoList);
-        return "community";
     }
 
     @PostMapping("/deletePost")
