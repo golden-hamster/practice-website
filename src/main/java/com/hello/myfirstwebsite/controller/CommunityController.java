@@ -85,6 +85,7 @@ public class CommunityController {
         model.addAttribute("post", postDto);
         model.addAttribute("postId", postId);
         model.addAttribute("loginUserFlag", loginUserFlag);
+        model.addAttribute("loginId",loginDto.getLoginId());
         return "post";
     }
 
@@ -95,6 +96,12 @@ public class CommunityController {
         Member findMember = memberService.findByLoginId(loginDto.getLoginId());
         Comment comment = Comment.createComment(findMember.getId(), postId, commentDto.getDescription());
         commentService.save(comment);
+        return "redirect:/community/" + postId;
+    }
+
+    @PostMapping("/deleteComment")
+    public String deleteComment(Long commentId, Long postId) {
+        commentService.delete(commentId);
         return "redirect:/community/" + postId;
     }
 
@@ -117,7 +124,7 @@ public class CommunityController {
 
     public CommentDto convertToCommentDto(Comment comment) {
         Member findMember = memberService.findById(comment.getMemberId());
-        return new CommentDto(comment.getDescription(), findMember.getName(), comment.getCreatedDate());
+        return new CommentDto(comment.getCommentId() ,comment.getDescription(), findMember.getName(), findMember.getLoginId(), comment.getCreatedDate());
     }
 
 }
